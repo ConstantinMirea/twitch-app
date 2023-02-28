@@ -1,0 +1,10 @@
+.demo-inline-calendar-card {
+  width: 300px;
+  height: 400px;
+}
+.streaming-schedule {
+  width: 500px;
+  height: 400px;
+  align-items: center;
+  justify-content: center;
+}

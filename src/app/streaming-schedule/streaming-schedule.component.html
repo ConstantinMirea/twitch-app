@@ -1,0 +1,19 @@
+<div class="container mt-4">
+  <div class="row align-items-center">
+    <div class="col-sm-6">
+      <mat-card class="demo-inline-calendar-card">
+        <mat-calendar [(selected)]="selected"></mat-calendar>
+      </mat-card>
+    </div>
+    <div class="col-sm-6 text-center">
+      <mat-card class="streaming-schedule">
+        <p>Date: <br>{{selected}}</p>
+        <p *ngIf="selected">I will be streaming in between 18:00-23:00</p>
+      </mat-card>
+
+    </div>
+  </div>
+</div>
+
+
+
