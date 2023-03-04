@@ -1,1 +1,32 @@
-<p>games-streamed works!</p>
+<h1 class="text-center">EAT SLEEP GAME REPEAT 🍴💤🎮🔁</h1>
+<mat-card class="my-2">
+  <p class="text-justify">&nbsp; &nbsp; Well, let me tell you about myself, the gaming addict! I'm a PC and Playstation
+    gamer who just can't get enough of shooter and strategy games. Give me a game with an intricate storyline, intense
+    action and some strategic thinking, and I'm all over it! My friends often make fun of me for spending hours on end
+    glued to my screen, yelling at my enemies and making all sorts of weird hand gestures as if they could actually see
+    me through the screen. But hey, it's not my fault that I'm so passionate about gaming! And when I'm not playing, I
+    love to stream my gaming sessions online, just so that I can share my passion with the world. Who knows, maybe one
+    day I'll be the next PewDiePie or Ninja! But for now, I'm just happy to have found my calling in life - gaming!</p>
+</mat-card>
+<div class="row">
+  <div class="col-sm-4">
+    <h2>Browse game</h2>
+    <app-carousel [slides]="gameSlides"></app-carousel>
+  </div>
+  <div class="col-sm-1"></div>
+  <div class="col-sm-7">
+    <div class="container d-flex flex-wrap">
+      <ng-container *ngFor="let game of gamesPlayed">
+        <mat-card class="m-2 p-1">
+          <p>{{game.title}}</p>
+          <img [src]="game.img" alt="image" style="width:100px;height:100px;">
+        </mat-card>
+      </ng-container>
+    </div>
+  </div>
+
+</div>
+<div class="container d-flex justify-content-center">
+
+</div>
+

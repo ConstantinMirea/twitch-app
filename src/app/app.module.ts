@@ -17,6 +17,12 @@ import { WinnersListComponent } from './winners-list/winners-list.component';
 import { GamesStreamedComponent } from './games-streamed/games-streamed.component';
 import { StreamingScheduleComponent } from './streaming-schedule/streaming-schedule.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CarouselComponent } from './carousel/carousel.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { DarklordRigComponent } from './my-rigs/darklord-rig/darklord-rig.component';
+import { MorpheusRigComponent } from './my-rigs/morpheus-rig/morpheus-rig.component';
+import { Ps5RigComponent } from './my-rigs/ps5-rig/ps5-rig.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +31,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     AboutMeComponent,
     WinnersListComponent,
     GamesStreamedComponent,
-    StreamingScheduleComponent
+    StreamingScheduleComponent,
+    CarouselComponent,
+    DarklordRigComponent,
+    MorpheusRigComponent,
+    Ps5RigComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +46,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
+
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent]

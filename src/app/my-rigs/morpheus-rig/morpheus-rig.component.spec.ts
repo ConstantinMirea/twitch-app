@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WinnersListComponent } from './winners-list.component';
+import { MorpheusRigComponent } from './morpheus-rig.component';
 
-describe('WinnersListComponent', () => {
-  let component: WinnersListComponent;
-  let fixture: ComponentFixture<WinnersListComponent>;
+describe('MorpheusRigComponent', () => {
+  let component: MorpheusRigComponent;
+  let fixture: ComponentFixture<MorpheusRigComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WinnersListComponent ]
+      declarations: [ MorpheusRigComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WinnersListComponent);
+    fixture = TestBed.createComponent(MorpheusRigComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

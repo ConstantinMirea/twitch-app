@@ -1,8 +1,6 @@
 <div class="container">
-
-  <div class="row">
-    <div class="col-sm-6">
-
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="About me">
       <mat-card>
         <h1 class="text-center align-items-center">About me: </h1>
         <hr>
@@ -41,35 +39,97 @@
         </div>
 
       </mat-card>
-    </div>
-    <div class="col-sm-6">
+    </mat-tab>
+    <mat-tab label="Social Media">
       <mat-card>
         <h1 class="text-center align-items-center">Social media links: </h1>
         <hr>
-        <p>
-          &nbsp; &nbsp; &nbsp; I run a Youtube channel where I like to post my gameplay, walkthroughs and game reviews, i also do PC hardware
-          reviews, check it ouy for more details.
-          My discord server is there for when you want to have a chat or leave me mesage offline, i promise to reply ASAP.
-          My facebook page CGC is full of tech articles if soon to be release tech, relevant reviews posts and lots more
-        </p>
-        <div class="d-flex flex-column">
 
-          <button mat-raised-button color="primary" class="my-4">
-            Youtube
+        <div>
+          <button mat-raised-button color="primary" >
+            <a href="https://www.youtube.com/channel/UCqey3t9Ca8uvHiPrmD016yg" target="_blank"><i
+                class="fa fa-youtube text-danger"></i>&nbsp; Youtube</a>
           </button>
-          <button mat-raised-button color="primary">
-            Discord
-          </button>
-          <button mat-raised-button color="primary" class="my-4">
-            Facebook
-          </button>
+          <p>
+            I run a Youtube channel where I like to post my gameplay, walkthroughs and game reviews,
+            i also do PC hardware
+            reviews, check it ouy for more details.
+            My discord server is there for when you want to have a chat or leave me mesage offline, i promise to reply
+            ASAP.
+            My facebook page CGC is full of tech articles if soon to be release tech, relevant reviews posts and lots more
+          </p>
+          <div class="row align-items-center text-center">
+            <div class="col-sm-6">
+              <iframe width="300" height="250" src="https://www.youtube.com/embed/2G0Va1RfupE"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+            <div class="col-sm-6">
+              <iframe width="300" height="250" src="https://www.youtube.com/embed/PcS8IXIM5kU"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-sm-6">
+              <iframe width="300" height="250" src="https://www.youtube.com/embed/u4FyrKJt70w"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+            <div class="col-sm-6">
+              <iframe width="300" height="250" src="https://www.youtube.com/embed/LbWwDmZYfeY"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+          <hr>
+          <button mat-raised-button color="primary" > <a href="https://discord.gg/6t5QG7ds"
+            target="_blank"><i class="fa fa-discord"></i>Discord</a>
+        </button>
+          <p>Check out my Discord server, where you can drop in to say hello, just hang or ask a question,
+            everyone is welcome</p>
+          <p>I can also spin up game servers on demand and rent them, more details on the server</p>
+          <hr>
+          <button mat-raised-button color="primary" ><a
+            href="https://www.facebook.com/profile.php?id=100063554113186" target="_blank"><i
+              class="fa fa-facebook"></i>&nbsp; Facebook</a>
+        </button>
+          <p>I post articles, memes, and more almost daily on my facebook page CGC</p>
+          <hr>
+          <button mat-raised-button color="primary"><a
+            href="https://www.instagram.com/constantinsgamingchannel/?igshid=YmMyMTA2M2Y%3D&fbclid=IwAR0X37LbW9MtamRIGtSPMasQoJY2Bk9maLchG6QpWoYguuNurf8mkbXdyos"
+            target="_blank"> <i class="fa fa-instagram text-danger"></i>&nbsp; Instagram</a>
+        </button>
+          <p>My Instagram</p>
+
+
         </div>
       </mat-card>
+    </mat-tab>
+    <mat-tab label="My Rigs">
+      <h1 class="text-center align-items-center">My Rigs: </h1>
+      <hr>
+      <div class="row">
+        <div class="col-sm-4">
+          {{systemSpecs}}
+          <app-carousel [slides]="rigSlides" (slideClicked)="showSystemSpecs($event)"></app-carousel>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-7">
+          <app-darklord-rig *ngIf="rigNumber === 0"></app-darklord-rig>
+          <app-morpheus-rig *ngIf="rigNumber === 1"></app-morpheus-rig>
+          <app-ps5-rig *ngIf="rigNumber === 2"></app-ps5-rig>
+        </div>
+
+      </div>
 
 
+    </mat-tab>
+  </mat-tab-group>
 
-
-    </div>
-  </div>
 
 </div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AboutMeComponent } from './about-me.component';
+import { Ps5RigComponent } from './ps5-rig.component';
 
-describe('AboutMeComponent', () => {
-  let component: AboutMeComponent;
-  let fixture: ComponentFixture<AboutMeComponent>;
+describe('Ps5RigComponent', () => {
+  let component: Ps5RigComponent;
+  let fixture: ComponentFixture<Ps5RigComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AboutMeComponent ]
+      declarations: [ Ps5RigComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AboutMeComponent);
+    fixture = TestBed.createComponent(Ps5RigComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

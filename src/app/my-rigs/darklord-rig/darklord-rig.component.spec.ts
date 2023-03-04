@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TwitchPageComponent } from './twitch-page.component';
+import { DarklordRigComponent } from './darklord-rig.component';
 
-describe('TwitchPageComponent', () => {
-  let component: TwitchPageComponent;
-  let fixture: ComponentFixture<TwitchPageComponent>;
+describe('DarklordRigComponent', () => {
+  let component: DarklordRigComponent;
+  let fixture: ComponentFixture<DarklordRigComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TwitchPageComponent ]
+      declarations: [ DarklordRigComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TwitchPageComponent);
+    fixture = TestBed.createComponent(DarklordRigComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
