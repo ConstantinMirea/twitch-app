@@ -1,9 +1,9 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <a class="navbar-brand" href="#"><img src="assets/twitch_profile.png" class = "header-logo rounded-circle" alt="image"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"  (click)="collapsed=!collapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [class.collapse]="collapsed">
       <ul class="navbar-nav mr-auto nav-font">
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/">About CGC</a>
@@ -22,7 +22,7 @@
         </li>
       </ul>
 
-    <!-- </div> -->
+    </div>
   </nav>
 
 
