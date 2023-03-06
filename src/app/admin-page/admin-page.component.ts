@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AuthService } from '../login/auth.service';
 import { UpdateService } from './update.service';
 
@@ -26,13 +27,14 @@ export class AdminPageComponent implements OnInit {
   loadWinners() {
     this.updateService.returnWinners().then(docs => {
           docs.forEach(ex => { this.winners.push(ex.data()); })
-          console.log(this.winners);
+          // console.log(this.winners);
           return this.winners
         })
   }
 
-  updateWinners() {
-    this.updateService.updateWinners();
+  onSubmit(form:NgForm) {
+    console.log(form.value.name)
+    // this.updateService.updateWinners();
     this.loadWinners();
 
   }

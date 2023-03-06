@@ -4,12 +4,12 @@
 <ul *ngFor="let winner of winners">
   <li>{{winner.data}}</li>
 </ul>
-<button class="btn btn-primary" (click)="updateWinners()">Update winners</button>
+<button class="btn btn-primary">Update winners</button>
 <button class="btn btn-primary" (click)="massUpdatewinners()">Mass Update winners</button>
 
 <a href="" (click)="logout()">Logout</a>
 
-<form #userForm="ngForm" class="form-group">
+<form #userForm="ngForm" class="form-group" (ngSubmit)="onSubmit(userForm)">
   <input type="text" [(ngModel)]="name" name="name">
   <p>{{name}}</p>
 <button class="btn btn-primary">Update List</button>
