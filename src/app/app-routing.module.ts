@@ -17,8 +17,8 @@ const routes: Routes = [
   { path: 'games-streamed', component: GamesStreamedComponent },
   { path: 'streaming-schedule', component: StreamingScheduleComponent },
   { path: 'login', component: LoginComponent },
-  // { path: 'admin-page', component: AdminPageComponent, canActivate: [AuthGuard] },
-  { path: 'admin-page', component: AdminPageComponent },
+  { path: 'admin-page', component: AdminPageComponent, canActivate: [AuthGuard] },
+  // { path: 'admin-page', component: AdminPageComponent },
 
   {path: 'error-page', component: ErrorPageComponent}
 ];
