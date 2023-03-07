@@ -4,12 +4,12 @@
   <p>Also on my Twitch page you can check to see what game i am streaming based on the release date</p>
   <div class="row align-items-center">
     <div class="col-sm-6">
-      <mat-card class="demo-inline-calendar-card">
+      <mat-card appearance="outlined" class="demo-inline-calendar-card">
         <mat-calendar [(selected)]="selected" (click)="displayDate()"></mat-calendar>
       </mat-card>
     </div>
     <div class="col-sm-6 text-center">
-      <mat-card class="streaming-schedule">
+      <mat-card appearance="outlined" class="streaming-schedule">
         <!-- <p>Date: <br>{{customDate}}</p> -->
         <p *ngIf="selected">On {{customDate}} I will be streaming between {{streamingInterval}}</p>
         <img *ngIf="selected" src="assets/streaming.gif" alt="GIF">

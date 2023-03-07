@@ -1,17 +1,41 @@
 
-<h1>Admin Page</h1>
+<h1 class="text-center">Admin Page</h1>
+<div class="row">
+  <div class="col-sm-2 offset-10">
+    <button class="btn btn-primary" (click)="logout()">Logout</button>
 
-<ul *ngFor="let winner of winners">
-  <li>{{winner.data}}</li>
-</ul>
-<button class="btn btn-primary">Update winners</button>
-<button class="btn btn-primary" (click)="massUpdatewinners()">Mass Update winners</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <mat-card>
+      <h2>{{displayHeader}}</h2>
+      <ul *ngFor="let winner of winners">
+        <li class="list-group-item" (click)="toggle($event)" [ngClass]="{'list-group-item-success':editWinner}" [id]="winner.id">{{winner.data}}</li>
+      </ul>
+      <hr>
+      <mat-card class="m-2">
+        <form #userForm="ngForm" class="form-group" (ngSubmit)="onSubmit(userForm)">
+          <label for="winnerInput">Type the new winner here: <span> <p>{{name}}</p></span> </label>
+          <input type="text" id="winnerInput" class="form-control" [(ngModel)]="name" name="name" placeholder="dd/mm/yyyy-twitchID-won a game-key-name">
 
-<a href="" (click)="logout()">Logout</a>
 
-<form #userForm="ngForm" class="form-group" (ngSubmit)="onSubmit(userForm)">
-  <input type="text" [(ngModel)]="name" name="name">
-  <p>{{name}}</p>
-<button class="btn btn-primary">Update List</button>
-</form>
+            <button class="btn btn-primary m-2">Update List</button>
+            <button type="button" class="btn btn-warning" (click)="editWinners()">Remove</button>
+
+
+        </form>
+      </mat-card>
+
+    </mat-card>
+  </div>
+</div>
+
+
+<!-- <button class="btn btn-primary">Update winners</button> -->
+<!-- <button class="btn btn-primary" (click)="massUpdatewinners()">Mass Update winners</button> -->
+
+
+
+
 

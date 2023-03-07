@@ -1,5 +1,5 @@
 <h1 class="text-center">EAT SLEEP GAME REPEAT 🍴💤🎮🔁</h1>
-<mat-card class="my-2">
+<mat-card appearance="outlined" class="my-2">
   <p class="text-justify">&nbsp; &nbsp; Well, let me tell you about myself, the gaming addict! I'm a PC and Playstation
     gamer who just can't get enough of shooter and strategy games. Give me a game with an intricate storyline, intense
     action and some strategic thinking, and I'm all over it! My friends often make fun of me for spending hours on end
@@ -17,7 +17,7 @@
   <div class="col-sm-7">
     <div class="container d-flex flex-wrap">
       <ng-container *ngFor="let game of gamesPlayed">
-        <mat-card class="m-2 p-1">
+        <mat-card appearance="outlined" class="m-2 p-1">
           <p>{{game.title}}</p>
           <img [src]="game.img" alt="image" style="width:100px;height:100px;">
         </mat-card>

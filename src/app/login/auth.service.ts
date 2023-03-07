@@ -8,13 +8,15 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   isAuthenticated: boolean = false;
-  constructor(public authService: AngularFireAuth, private router: Router) {}
+  constructor(public authService: AngularFireAuth, private router: Router) {
+    this.autologout()
+  }
 
   login(email: string, password: string) {
     this.authService
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         this.isAuthenticated = true;
         this.router.navigate(['/admin-page']);
       })
@@ -27,8 +29,14 @@ export class AuthService {
   logout() {
     this.authService.signOut();
     this.isAuthenticated = false;
+    this.router.navigate(['/']);
   }
 
+  autologout() {
+    if (this.isAuthenticated) {
+      setTimeout(() => {this.logout},15*60*1000)
+    }
+  }
   isAuth() {
     return this.isAuthenticated;
   }

@@ -31,6 +31,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AuthGuard } from './login/auth.guard';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    MatSnackBarModule
 
   ],
   providers: [MatDatepickerModule, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, AuthGuard],

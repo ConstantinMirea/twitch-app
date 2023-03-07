@@ -9,6 +9,7 @@ import {
   setDoc,
   addDoc,
   docSnapshots,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { winnersList } from 'src/app/winners-list/winners-list';
@@ -42,5 +43,10 @@ export class UpdateService {
         }
       );
     });
+  }
+
+  deleteWinner(winner: string) {
+    console.log(winner);
+    deleteDoc(doc(this.db, 'winners-list', winner)).then(() => { console.log('success'); }).catch((err) => console);
   }
 }
