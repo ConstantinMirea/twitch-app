@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   isAuthenticated: boolean = false;
   constructor(public authService: AngularFireAuth, private router: Router) {
-    this.autologout()
+
   }
 
   login(email: string, password: string) {
@@ -18,6 +18,7 @@ export class AuthService {
       .then((result) => {
         // console.log(result);
         this.isAuthenticated = true;
+        this.autologout();
         this.router.navigate(['/admin-page']);
       })
       .catch((err) => {
