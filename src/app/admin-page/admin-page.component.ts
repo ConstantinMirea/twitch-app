@@ -18,7 +18,8 @@ export class AdminPageComponent implements OnInit {
   games2: any[] = [];
   name: string | undefined;
   editWinner: boolean = false;
-  displayHeader = 'Winners list';
+  editGame: boolean = false;
+
   // items = Array.from({length: 100000}).map((_, i) => `Item #${i}`);
 
   constructor(
@@ -51,7 +52,6 @@ export class AdminPageComponent implements OnInit {
       });
       // console.log(this.games);
       this.games2 = [...this.games];
-      // return this.winners;
     });
   }
 
@@ -69,16 +69,17 @@ export class AdminPageComponent implements OnInit {
       form2.value.image,
       form2.value.link
     );
-    // console.log(form2.value.title, form2.value.image, form2.value.link);
     this._snackBar.open('New game added:', form2.value.title);
-    // this.winners = [];
     this.loadGames();
     form2.reset();
   }
 
   editWinners() {
-    this.displayHeader = 'Pick a winner to delete';
-    this.editWinner = true;
+       this.editWinner = !this.editWinner;
+  }
+
+  editGames() {
+       this.editGame = !this.editGame;
   }
 
   toggle(event: any) {
@@ -89,8 +90,23 @@ export class AdminPageComponent implements OnInit {
         (winner) => winner.data !== event.target.innerText
       );
       this.editWinner = false;
+
     }
   }
+
+  toggleGames(event: any) {
+    if (this.editGame) {
+      console.log(event.target.id);
+      // this.updateService.deleteGame(event.target.id);
+      this._snackBar.open('Game deleted:', event.target.innerText);
+      this.games = this.games.filter(
+        (game) => game.id !== event.target.id
+      );
+      this.games2 = [...this.games];
+      this.editGame = false;
+    }
+  }
+
 
   massUpdatewinners() {
     this.updateService.massUpdate();

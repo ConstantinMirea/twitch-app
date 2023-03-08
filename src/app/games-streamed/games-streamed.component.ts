@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UpdateService } from '../admin-page/update.service';
 
 import {gamesPlayed} from "./games-played";
 
@@ -11,10 +12,12 @@ export class GamesStreamedComponent  {
   // gameSlides = gameSlides;
   gameSlides: any[] | undefined;
   // gameSlides2:any[] | undefined;
-  gamesPlayed = gamesPlayed;
+  // gamesPlayed = gamesPlayed;
+  gamesPlayed: any[] = [];
 
-  constructor() {
-    this.createGameSlides();
+  constructor(private updateService: UpdateService) {
+this.loadGames()
+    // this.createGameSlides();
 }
 
   createGameSlides() {
@@ -23,5 +26,15 @@ export class GamesStreamedComponent  {
     });
   }
 
-
+  loadGames() {
+    this.updateService.returnGames().then((docs) => {
+      docs.forEach((ex) => {
+        this.gamesPlayed.push({ ...ex.data(), id: ex.id });
+      });
+      console.log(gamesPlayed);
+      this.gameSlides = this.gamesPlayed.map((game: { img: any; }) => {
+        return {img:game.img};
+      });
+    });
+  }
 }

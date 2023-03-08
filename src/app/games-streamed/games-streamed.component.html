@@ -8,18 +8,23 @@
     love to stream my gaming sessions online, just so that I can share my passion with the world. Who knows, maybe one
     day I'll be the next PewDiePie or Ninja! But for now, I'm just happy to have found my calling in life - gaming!</p>
 </mat-card>
-<div class="row">
-  <div class="col-sm-4">
-    <h2>Browse game</h2>
-    <app-carousel [slides]="gameSlides"></app-carousel>
+<div class="row justify-content-center">
+  <div class="col-sm-5 ">
+    <h2 class="text-center" >Browse game</h2>
+    <div style="margin-left: 6vw;">
+      <app-carousel [slides]="gameSlides" ></app-carousel>
+    </div>
+
   </div>
-  <div class="col-sm-1"></div>
+
   <div class="col-sm-7">
     <div class="container d-flex flex-wrap">
+
       <ng-container *ngFor="let game of gamesPlayed">
-        <mat-card appearance="outlined" class="m-2 p-1">
-          <p>{{game.title}}</p>
-          <img [src]="game.img" alt="image" style="width:100px;height:100px;">
+
+        <mat-card appearance="outlined" class=" text-center m-2 p-1" [id]="game.id" style="width:150px;height:200px;">
+          <a class="btn btn-link "  [href]="game.link"> <p class="small-text">{{game.game}}</p></a>
+          <img [src]="game.img" alt="image" style="width:100px;height:100px;" class="rounded mx-auto d-block">
         </mat-card>
       </ng-container>
     </div>

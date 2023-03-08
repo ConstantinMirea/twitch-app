@@ -1,28 +1,31 @@
-
-<div class="row mb-4">
-  <div class="col-2 col-xs-6 ">
+<div class="row m-3">
+  <div class="col-2 col-xs-6 text-center ">
     <h1 class="">Admin Page</h1>
   </div>
-  <div class="col-2 col-xs-6 ">
+  <div class="col-10 col-xs-6 text-end">
     <button class="btn btn-primary" (click)="logout()">Logout</button>
   </div>
 </div>
 <div class="row">
   <div class="col-xl-6 col-xs-12 ">
     <mat-card>
-      <h2 class="text-center">{{displayHeader}}</h2>
+      <h2 class="text-center">{{editWinner ? 'Pick a winner to delete':'Winners List'}}</h2>
       <ul class="list-group" *ngFor="let winner of winners">
-        <li class="list-group-item" (click)="toggle($event)" [ngClass]="{'list-group-item-success':editWinner}" [id]="winner.id">{{winner.data}}</li>
+        <li class="list-group-item" (click)="toggle($event)" [ngClass]="{'list-group-item-success':editWinner}"
+          [id]="winner.id">{{winner.data}}</li>
       </ul>
       <hr>
       <mat-card class="m-2">
         <form #userForm="ngForm" class="form-group" (ngSubmit)="onSubmit(userForm)">
-          <label for="winnerInput">Type the new winner here: <span> <p>{{name}}</p></span> </label>
-          <input type="text" id="winnerInput" class="form-control" [(ngModel)]="name" name="name" placeholder="dd/mm/yyyy-twitchID-won a game-key-name" required>
+          <label for="winnerInput">Type the new winner here: <span>
+              <p>{{name}}</p>
+            </span> </label>
+          <input type="text" id="winnerInput" class="form-control" [(ngModel)]="name" name="name"
+            placeholder="dd/mm/yyyy-twitchID-won a game-key-name" required>
 
 
-            <button class="btn btn-primary m-2"[disabled]="!userForm.valid">Update List</button>
-            <button type="button" class="btn btn-warning" (click)="editWinners()">Remove</button>
+          <button class="btn btn-primary m-2" [disabled]="!userForm.valid">Update List</button>
+          <button type="button" class="btn btn-warning" (click)="editWinners()">Remove</button>
         </form>
       </mat-card>
 
@@ -30,9 +33,38 @@
   </div>
   <div class="col-xl-6 col-xs-12">
     <mat-card>
-      <h2 class="text-center">Games List</h2>
+      <h2 class="text-center">{{editGame ? 'Pick a game to delete':'Games List'}}</h2>
       <hr>
-      <!-- <button class="btn btn-primary" (click)="massUpdateGames()">MassUpdate Games</button> -->
+
+      <cdk-virtual-scroll-viewport appendOnly [itemSize]="games2.length" class="viewport text-center">
+        <div *cdkVirtualFor="let game of games2" class="viewport-item" [ngClass]="{'list-group-item-success':editGame}" (click)="toggleGames($event)" [id]="game.id">
+          <a [href]="game.link" class="">{{game.game}}</a>
+          <br>
+          <img [src]=" game.img" alt="" style="width:100px; height:100px">
+          <hr class="my-1">
+        </div>
+      </cdk-virtual-scroll-viewport>
+
+      <form #userForm2="ngForm" class="form-group" (ngSubmit)="onSubmitGames(userForm2)">
+        <label for="titleInput">Game title: </label>
+        <input type="text" id="titleInput" class="form-control" name="title" placeholder="Game title" ngModel required>
+
+        <label for="imgInput">Image link: </label>
+        <input type="text" id="imgInput" class="form-control" name="image" placeholder="Image link" ngModel required>
+
+        <label for="linkInput">Game link: </label>
+        <input type="text" id="linkInput" class="form-control" name="link" placeholder="Game link" ngModel required>
+
+        <button class="btn btn-primary m-2" [disabled]="!userForm2.valid">Update List</button>
+        <button type="button" class="btn btn-warning" (click)="editGames()">Remove</button>
+      </form>
+    </mat-card>
+  </div>
+</div>
+
+
+
+<!-- <button class="btn btn-primary" (click)="massUpdateGames()">MassUpdate Games</button> -->
 <!-- <ul class="list-group" *ngFor="let game of games; let i=index">
   <li class="list-group-item " [id]="game.id" >
      {{game.game}}
@@ -41,40 +73,5 @@
      <a [href]="game.link">Game Link</a>
   </li>
 </ul> -->
-<cdk-virtual-scroll-viewport appendOnly [itemSize]="games2.length" class="viewport text-center">
-  <div *cdkVirtualFor="let game of games2" class="viewport-item">
-    <a [href]="game.link" class="">{{game.game}}</a>
-    <br>
-   <img [src]=" game.img" alt="" style="width:100px; height:100px" >
-   <hr class="my-1">
-  </div>
-</cdk-virtual-scroll-viewport>
-
-<form #userForm2="ngForm" class="form-group" (ngSubmit)="onSubmitGames(userForm2)">
-  <label for="titleInput">Game title: </label>
-  <input type="text" id="titleInput" class="form-control" name="title" placeholder="Game title" ngModel required>
-
-  <label for="imgInput">Image link: </label>
-  <input type="text" id="imgInput" class="form-control" name="image" placeholder="Image link" ngModel required>
-
-  <label for="linkInput">Game link: </label>
-    <input type="text" id="linkInput" class="form-control" name="link" placeholder="Game link" ngModel required>
-
-    <button class="btn btn-primary m-2" [disabled]="!userForm2.valid">Update List</button>
-    <button type="button" class="btn btn-warning" disabled >Remove</button>
-</form>
-    </mat-card>
-  </div>
-</div>
-
-
-
-
-
 <!-- <button class="btn btn-primary">Update winners</button> -->
 <!-- <button class="btn btn-primary" (click)="massUpdatewinners()">Mass Update winners</button> -->
-
-
-
-
-

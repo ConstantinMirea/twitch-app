@@ -73,10 +73,19 @@ export class UpdateService {
   }
 
   deleteWinner(winner: string) {
-    console.log(winner);
+
     deleteDoc(doc(this.db, 'winners-list', winner))
       .then(() => {
-        console.log('success');
+        console.log('success winner deleted');
+      })
+      .catch((err) => console.error(err));
+  }
+
+  deleteGame(game: string) {
+
+    deleteDoc(doc(this.db, 'games-list', game))
+      .then(() => {
+        console.log('success game deleted');
       })
       .catch((err) => console.error(err));
   }
