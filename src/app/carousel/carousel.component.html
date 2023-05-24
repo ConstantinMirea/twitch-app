@@ -1,0 +1,13 @@
+<div class="d-flex">
+  <button class="btn btn-success" (click)="onNextClick()">
+    <i class="fa fa-arrow-left"></i>
+  </button>
+  <ng-container
+  *ngFor="let slide of slides;let i = index">
+<img *ngIf="i === currentSlide" [src]="slide.img" alt="i" style="width:300px;height: 250px;">
+</ng-container>
+<button class="btn btn-success" (click)="onPreviousClick()">
+  <i class="fa fa-arrow-right"></i>
+</button>
+</div>
+

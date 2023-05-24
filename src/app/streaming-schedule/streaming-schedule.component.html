@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <h1>Welcome to my streaming schedule</h1>
+  <p>Click on a date to see if i could be online. I aim to stream in the evening mostly but i also try to maintaing a
+    work/life balance as well, in case in you want to get in touch, just drop me a DM on <a
+      href="https://discord.gg/6t5QG7ds">Discord</a> and i will reply back. My super friendly moderators can assist as
+    well. </p>
+  <p>Also on my <a href="https://www.twitch.tv/constantinsgamingchannel">Twitch page</a>
+      you can check to see what game i am streaming based on the release date</p>
+  <div class="row align-items-center">
+    <div class="col-sm-6 mb-4 align-items-center justify-content-center">
+      <mat-card appearance="outlined" class="demo-inline-calendar-card justify-content-center text-center">
+        <h2>Monthly schedule</h2>
+        <mat-calendar [(selected)]="selected" (click)="displayDate()" class="text-center justify-content-center"></mat-calendar>
+      </mat-card>
+    </div>
+    <div class="col-sm-6 text-center">
+      <mat-card appearance="outlined" class="streaming-schedule" class="bg-light">
+        <h2>Content streamed</h2>
+        <!-- <p>Date: <br>{{customDate}}</p> -->
+        <p *ngIf="selected">On {{customDate}} I will be streaming between {{streamingInterval}}</p>
+        <img *ngIf="selected" src="assets/streaming.gif" alt="GIF">
+        <img *ngIf="!selected" src="assets/sleeping.gif" alt="GIF">
+      </mat-card>
+
+    </div>
+  </div>
+</div>

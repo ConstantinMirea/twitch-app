@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://r4lxp4z6fb.execute-api.us-west-2.amazonaws.com/production",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": { "^/api": "" }
+}
+}

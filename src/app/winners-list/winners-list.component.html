@@ -1,0 +1,53 @@
+<h1 class="display-1 text-center">CGC's very own hall of fame <i class="fa fa-trophy text-danger"></i></h1>
+<div class="container">
+  <section>
+    <div class="row">
+      <div class="col-sm-6">
+        <h1>About giveaways:</h1>
+        <p> I want to share my enthusiasm for games with community members, so I decided to do periodic giveaways to
+          all
+          my followers, I set small goals like after each 10 follows I would do a raffle, where my WinnerPicker app
+          would
+          randomly pick one of you lot for a game key usually, or some software key as well, anything I can get my
+          hands
+          on really.
+          For a chance to win a game key just follow my channel, and you will automatically be introduced in a raffle.
+          I
+          also give game keys to the followers in the chat based on the game keys available.</p>
+      </div>
+      <div class="col-sm-6">
+        <h1>Subs help this alot</h1>
+        <p>If you can, please subscribe to my channel, i will use 100 % of the profits to get more games and share
+          them to my followers.</p>
+      </div>
+    </div>
+
+  </section>
+  <div class="row">
+    <div class="col-sm-3">
+      <mat-card appearance="outlined" style="background-color:rgb(154, 244, 90)">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>For my No 1 mod </mat-card-title>
+            <mat-card-subtitle><a href="https://www.twitch.tv/night0wl07">NightOwl07</a></mat-card-subtitle>
+            <i class="fa fa-user text-danger " style="font-size: 5em;"></i>
+          </mat-card-title-group>
+        </mat-card-header>
+
+        <mat-card-content> I wanted to take a moment to express my sincere gratitude for your incredible support as my
+          first Twitch subscriber
+          and as a valuable moderator on my channel. Your commitment and dedication to our community have been truly
+          exceptional, and I cannot thank you enough for your unwavering support.
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-sm-9">
+      <div *ngFor="let winner of winnersArray;let i = index">
+        <mat-card appearance="outlined" class="winners-show">
+          <p class="text-left m-1"> {{i+1}}. <i class="fa fa-user text-success"></i> &nbsp;{{winner.data}}</p>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+</div>

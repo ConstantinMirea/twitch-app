@@ -1,0 +1,137 @@
+<div class="container">
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="About me">
+      <mat-card appearance="outlined">
+        <h1 class="text-center align-items-center">About me: </h1>
+        <hr>
+        <div>
+          <img src="assets/headshot.jfif" alt="image" style="width:200px" class="rounded float-start m-2">
+          <p class="text-justify"> &nbsp; &nbsp; &nbsp; Hi there, I'm a huge PC hardware enthusiast, an avid gamer, and
+            someone who loves
+            chatting with people and making new friends. I've always been fascinated by technology, especially when it
+            comes to PCs, and I love learning about the latest hardware releases, comparing different components, and
+            building and upgrading my own PC. There's just something so satisfying about putting together a powerful
+            gaming rig and seeing it in action.
+            When it comes to gaming, I'm a huge fan of playing on my PC. I enjoy a wide range of games, from
+            first-person
+            shooters to strategy games to role-playing games. Multiplayer games are especially fun for me, as I love
+            being
+            able to connect with other players from around the world and compete or cooperate with them. I'm always on
+            the
+            lookout for new games to try and new challenges to conquer.
+            Aside from my love for PC hardware and gaming, I'm also a social butterfly. I love chatting with people and
+            learning about their interests and experiences. Whether it's online or offline, I enjoy engaging in
+            conversations and discussions with others. I'm interested in a wide range of topics, from technology and
+            gaming to music and movies, and I'm always eager to share my opinions and insights with others.
+            One of my favorite things to do is to combine my love for gaming and socializing. I enjoy organizing gaming
+            sessions with friends, attending gaming events and conventions, or joining online gaming communities to
+            connect with like-minded gamers from around the world. There's something special about being able to share
+            your passion for gaming with others and build friendships around a common interest.
+            But it's not just about gaming and socializing for me. I also take the time to give back to the community. I
+            volunteer at local gaming events, helping to organize and run tournaments and competitions. I also enjoy
+            mentoring younger gamers and sharing my knowledge and experience with them. It's important to me to be able
+            to
+            give back to the community and help others who share my passion for gaming.
+            In summary, I'm someone who is passionate about PC hardware and gaming, loves connecting with others, and
+            enjoys making new friends. Whether I'm building a new PC, trying out a new game, or chatting with friends,
+            my
+            enthusiasm for life and my love for technology and gaming shines through in everything I do.</p>
+        </div>
+
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Social Media">
+      <mat-card appearance="outlined">
+        <h1 class="text-center align-items-center">Social media links: </h1>
+        <hr>
+
+        <div>
+          <button mat-raised-button color="primary" >
+            <a href="https://www.youtube.com/channel/UCqey3t9Ca8uvHiPrmD016yg" target="_blank"><i
+                class="fa fa-youtube text-danger"></i>&nbsp; Youtube</a>
+          </button>
+          <p>
+            I run a Youtube channel where I like to post my gameplay, walkthroughs and game reviews,
+            i also do PC hardware
+            reviews, check it ouy for more details.
+            My discord server is there for when you want to have a chat or leave me mesage offline, i promise to reply
+            ASAP.
+            My facebook page CGC is full of tech articles if soon to be release tech, relevant reviews posts and lots more
+          </p>
+          <div class="row align-items-center text-center">
+            <div class="col-sm-6">
+              <iframe width="300" height="250" src="https://www.youtube.com/embed/2G0Va1RfupE"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+            <div class="col-sm-6">
+              <iframe width="300" height="250" src="https://www.youtube.com/embed/PcS8IXIM5kU"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-sm-6">
+              <iframe width="300" height="250" src="https://www.youtube.com/embed/u4FyrKJt70w"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+            <div class="col-sm-6">
+              <iframe width="300" height="250" src="https://www.youtube.com/embed/LbWwDmZYfeY"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+          <hr>
+          <button mat-raised-button color="primary" > <a href="https://discord.gg/6t5QG7ds"
+            target="_blank"><i class="fa fa-discord"></i>Discord</a>
+        </button>
+          <p>Check out my Discord server, where you can drop in to say hello, just hang or ask a question,
+            everyone is welcome</p>
+          <p>I can also spin up game servers on demand and rent them, more details on the server</p>
+          <hr>
+          <button mat-raised-button color="primary" ><a
+            href="https://www.facebook.com/profile.php?id=100063554113186" target="_blank"><i
+              class="fa fa-facebook"></i>&nbsp; Facebook</a>
+        </button>
+          <p>I post articles, memes, and more almost daily on my facebook page CGC</p>
+          <hr>
+          <button mat-raised-button color="primary"><a
+            href="https://www.instagram.com/constantinsgamingchannel/?igshid=YmMyMTA2M2Y%3D&fbclid=IwAR0X37LbW9MtamRIGtSPMasQoJY2Bk9maLchG6QpWoYguuNurf8mkbXdyos"
+            target="_blank"> <i class="fa fa-instagram text-danger"></i>&nbsp; Instagram</a>
+        </button>
+          <p>My Instagram</p>
+
+
+        </div>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="My Rigs">
+      <h1 class="text-center align-items-center">My Rigs: </h1>
+      <hr>
+      <div class="row">
+        <div class="col-sm-4">
+          {{systemSpecs}}
+          <app-carousel [slides]="rigSlides" (slideClicked)="showSystemSpecs($event)"></app-carousel>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-7">
+          <app-darklord-rig *ngIf="rigNumber === 0"></app-darklord-rig>
+          <app-morpheus-rig *ngIf="rigNumber === 1"></app-morpheus-rig>
+          <app-ps5-rig *ngIf="rigNumber === 2"></app-ps5-rig>
+        </div>
+
+      </div>
+
+
+    </mat-tab>
+  </mat-tab-group>
+
+
+</div>
+
+

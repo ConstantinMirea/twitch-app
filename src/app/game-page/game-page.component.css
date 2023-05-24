@@ -1,0 +1,19 @@
+.example-card {
+
+  width: 50vw;
+  }
+  
+.card-image{
+    width: 50vw;
+    height: 300px;
+    object-fit: cover;
+}
+.screenshot {
+    width: 200px;
+    height: fit-content;
+}
+.screenshots{
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+}
