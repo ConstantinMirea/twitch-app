@@ -16,10 +16,12 @@ export class GamesApiService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      "Access-Control-Allow-Origin": '*',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      // 'Access-Control-Allow-Credentials':'true',
+      'Access-Control-Allow-Credentials':'true',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
       // 'Client-ID': 'q4oc621n43zeonaouz851w30vo39k4',
       // 'Authorization': 'Bearer 5opn3uhshfsfwhln5q8y3xml5v2u7y'
       'x-api-key': 'Ywm5ymvSJf82lhEATVqBI1FF8IT48LhY4etbq9Hr'
@@ -63,10 +65,12 @@ export class GamesApiService {
   getGames2() {
 
     // const id = 244918;
+    const url = 'https://r4lxp4z6fb.execute-api.us-west-2.amazonaws.com/production';
+
     const minReleaseDate = moment(new Date()).subtract(1, 'months').unix();
     const maxReleaseDate = moment(new Date()).add(1, 'years').unix();
     const body = `fields *;where first_release_date > ${minReleaseDate} & first_release_date < ${maxReleaseDate} & aggregated_rating > 75; sort first_release_date desc; limit 25;`;
-    return this.http.post<Game[]>("/api/v4/games/", body, this.httpOptions).pipe(
+    return this.http.post<Game[]>(`${url}/v4/games/`, body, this.httpOptions).pipe(
 map((games:any) => {
   let coverIDs: any = [];
   games.forEach((game:any) => { if (game.cover) { coverIDs.push(game.cover) } });

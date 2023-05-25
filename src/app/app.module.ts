@@ -37,6 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { GameNewsComponent } from './game-news/game-news.component';
 import { GameCardComponent } from './game-card/game-card.component';
 import { GamePageComponent } from './game-page/game-page.component';
+import { GalleriaModule } from 'primeng/galleria';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { GamePageComponent } from './game-page/game-page.component';
     MatCardModule,
     MatTabsModule,
     FormsModule,
+    GalleriaModule,
     ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
