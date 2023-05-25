@@ -8,13 +8,30 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   },
-  "headers": [ {
-    "source": "*",
-    "headers": [ {
-      "key": "Access-Control-Allow-Origin",
-      "value": "*"
-    } ] }]
-
+  "redirects": [
+    {
+      "source": "/api/v4/games/",
+      "destination": "https://r4lxp4z6fb.execute-api.us-west-2.amazonaws.com/production/v4/games/",
+      "type": 301
+    }
+  ],
+  "headers": [
+    {
+      "source": "index.html",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ]
 }
