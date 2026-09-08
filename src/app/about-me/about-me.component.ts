@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { rigSlides } from './my-rigs';
-import { GamesApiService } from '../services/games-api.service';
-import { Game, LatestGames } from '../services/api-models';
 
 @Component({
   selector: 'app-about-me',
@@ -13,17 +11,8 @@ export class AboutMeComponent {
   systemSpecs = 'Click to show system specs';
   rigNumber = 0;
 
-
-  constructor(private gamesApiService: GamesApiService) {
-  
-  }
-
-  showSystemSpecs(event: any) {
-    console.log(rigSlides[event].spec);
+  showSystemSpecs(event: number): void {
     this.systemSpecs = rigSlides[event].spec;
-    this.rigNumber = +event;
+    this.rigNumber = event;
   }
-
-
-
 }

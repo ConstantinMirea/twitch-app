@@ -22,9 +22,8 @@ const routes: Routes = [
   { path: 'games-news', component: GameNewsComponent },
   { path: 'game-page/:id', component: GamePageComponent },
   { path: 'admin-page', component: AdminPageComponent, canActivate: [AuthGuard] },
-  // { path: 'admin-page', component: AdminPageComponent },
-
-  {path: 'error-page', component: ErrorPageComponent}
+  { path: 'error-page', component: ErrorPageComponent },
+  { path: '**', redirectTo: 'error-page' }
 ];
 
 @NgModule({

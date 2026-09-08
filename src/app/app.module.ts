@@ -83,7 +83,7 @@ import { GalleriaModule } from 'primeng/galleria';
 
     
   ],
-  providers: [MatDatepickerModule, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, AuthGuard],
+  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

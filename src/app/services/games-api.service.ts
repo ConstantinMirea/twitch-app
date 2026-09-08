@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, Subject, map, of, switchMap } from "rxjs";
-import { Game, LatestGames } from "./api-models";
-import * as moment from "moment";
+import { Observable, Subject, map, of } from "rxjs";
+import { Game, LatestGames, GameNews, TrendingGame, GamesApiResponse, NewsApiResponse, GameCover, Platform } from "./api-models";
+import { environment } from "../../enviroments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -10,109 +10,183 @@ import * as moment from "moment";
 export class GamesApiService {
   allGames: Game[] = [];
   onGamesCreated = new Subject<Game[]>();
+  private cachedGames: Game[] | null = null;
+  private cacheTimestamp: number = 0;
+  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
   constructor(private http: HttpClient) { }
 
   httpOptions = {
     headers: new HttpHeaders({
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST,GET, OPTIONS",
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "x-api-key": "SATQN5B4xm6ccVkyP1z4s8pGDyY9GyyV6XM9jg9W",
+      "x-api-key": environment.rawgApiKey,
     }),
   };
 
-  // "Client-ID": "q4oc621n43zeonaouz851w30vo39k4",
-  // Authorization: "Bearer 5opn3uhshfsfwhln5q8y3xml5v2u7y",
+  /**
+   * Fetch recently released highly-rated games (rating > 7).
+   * Uses direct RAWG v1 REST API — works without proxy / static hosting.
+   */
+  getGames2(): Observable<Game[]> {
+    // Return cached data if still valid
+    if (this.cachedGames && (Date.now() - this.cacheTimestamp) < this.CACHE_DURATION) {
+      return of(this.cachedGames);
+    }
 
-  testGames() {
-    let data1: any = [];
-    const body = "fields *; limit 50;";
-    //  const body = "fields cover.*; where id = 237565;";
-    const body2 = "fields *; where date > 1682924400; limit 50; sort date asc;";
-    return this.http.post<LatestGames[]>(
-      "/api/v4/release_dates/",
-      body2,
-      this.httpOptions
-    );
+    const minDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0];
+    const maxDate = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0];
 
-    // return this.http.post("/api/v4/games/",body2, httpOptions);
-  }
-
-  getGame(id: number) {
-    // const id = 244918;
-    const body = `fields *; where id=${id};`;
     return this.http
-      .post<Game[]>("/api/v4/games/", body, this.httpOptions)
+      .get<GamesApiResponse>(`${environment.rawgBaseUrl}/games`, {
+        ...this.httpOptions,
+        params: {
+          key: environment.rawgApiKey,
+          dates: `${minDate},${maxDate}`,
+          ordering: "-first_release",
+          rating: "7",
+          pagesize: "25",
+        },
+      })
       .pipe(
-        switchMap((res: any) => {
-          console.log(res);
-          return of(res[0]);
-        })
-      );
-  }
-
-  getGames() {
-    // const id = 244918;
-    const minReleaseDate = moment(new Date()).subtract(1, "months").unix();
-    const maxReleaseDate = moment(new Date()).add(1, "years").unix();
-    const body = `fields *;where first_release_date > ${minReleaseDate} & first_release_date < ${maxReleaseDate} & aggregated_rating > 75; sort first_release_date desc; limit 25;`;
-    return this.http.post<Game[]>("/api/v4/games/", body, this.httpOptions);
-  }
-
-  getGames2() {
-    // const id = 244918;
-    const url =
-      "https://r4lxp4z6fb.execute-api.us-west-2.amazonaws.com/production";
-
-    const minReleaseDate = moment(new Date()).subtract(1, "months").unix();
-    const maxReleaseDate = moment(new Date()).add(1, "years").unix();
-    const body = `fields *;where first_release_date > ${minReleaseDate} & first_release_date < ${maxReleaseDate} & aggregated_rating > 75; sort first_release_date desc; limit 25;`;
-    return this.http
-      .post<Game[]>(`/api/v4/games/`, body, this.httpOptions)
-      .pipe(
-        map((games: any) => {
-          let coverIDs: any = [];
-          games.forEach((game: any) => {
-            if (game.cover) {
-              coverIDs.push(game.cover);
+        map((response: GamesApiResponse) => {
+          const games: any[] = response.results.map((game: any) => {
+            // Truncate long summaries
+            if (game.summary?.length > 250) {
+              game.summary = game.summary.slice(0, 250) + "...";
             }
+            return game;
           });
-          const gameCoverID = `(${coverIDs.toString()})`;
-          this.getGameCover(gameCoverID).subscribe((res: any) => {
-            games.forEach((game: any) => {
-              game.first_release_date = new Date(
-                game.first_release_date * 1000
-              ).toLocaleDateString();
-              game.summary?.length > 250
-                ? (game.summary = game.summary.slice(0, 250) + "...")
-                : game.summary;
-              res.filter((res: any) => {
-                if (res.game === game.id) {
-                  res.url = res.url.replace("thumb", "720p");
-                  game.cover = res.url;
-                }
-              });
-            });
-          });
-          // console.log(games);
-          this.allGames = games;
-          // this.onGamesCreated.next(this.allGames);
-          return games;
+          this.allGames = games as Game[];
+          this.cachedGames = [...games];
+          this.cacheTimestamp = Date.now();
+          return games as Game[];
         })
       );
   }
 
-  getGameCover(id: string) {
-    const body = `fields *; where id=${id}; limit 50;`;
-    return this.http.post<any>("/api/v4/covers/", body, this.httpOptions);
+  /**
+   * Fetch cover images for a specific game using direct RAWG v1 REST API.
+   */
+  getGameCover(id: string): Observable<any> {
+    return this.http.get(`${environment.rawgBaseUrl}/games/${id}/covers`, {
+      ...this.httpOptions,
+      params: { key: environment.rawgApiKey },
+    });
   }
 
-  getGameScreenshots(id: string) {
-    const body = `fields *; where id=${id};`;
-    return this.http.post<any>("/api/v4/screenshots/", body, this.httpOptions);
+  /**
+   * Fetch screenshots for a specific game using direct RAWG v1 REST API.
+   */
+  getGameScreenshots(id: string): Observable<any> {
+    return this.http.get(`${environment.rawgBaseUrl}/games/${id}/screenshots`, {
+      ...this.httpOptions,
+      params: { key: environment.rawgApiKey },
+    });
+  }
+
+  /**
+   * Fetch a single game by its RAWG ID using the direct API.
+   */
+  getGameById(id: number): Observable<any> {
+    return this.http.get(`${environment.rawgBaseUrl}/games/${id}`, this.httpOptions);
+  }
+
+  /**
+   * Search games by name or keyword.
+   * @param query - search string
+   * @param page - page number (default: 1)
+   * @param pageSize - results per page (default: 20, max: 60)
+   */
+  searchGames(query: string, page: number = 1, pageSize: number = 20): Observable<GamesApiResponse> {
+    return this.http.get<GamesApiResponse>(
+      `${environment.rawgBaseUrl}/games/`,
+      {
+        ...this.httpOptions,
+        params: {
+          search: query,
+          page: page.toString(),
+          pagesize: pageSize.toString(),
+          key: environment.rawgApiKey,
+        },
+      }
+    );
+  }
+
+  /**
+   * Fetch trending games sorted by rating.
+   * @param page - page number (default: 1)
+   * @param pageSize - results per page (default: 20)
+   */
+  getTrendingGames(page: number = 1, pageSize: number = 20): Observable<GamesApiResponse> {
+    return this.http.get<GamesApiResponse>(
+      `${environment.rawgBaseUrl}/games/`,
+      {
+        ...this.httpOptions,
+        params: {
+          ordering: '-rating',
+          page: page.toString(),
+          pagesize: pageSize.toString(),
+          key: environment.rawgApiKey,
+        },
+      }
+    );
+  }
+
+  /**
+   * Fetch the latest game news articles.
+   * @param page - page number (default: 1)
+   * @param pageSize - results per page (default: 20)
+   */
+  getGameNews(page: number = 1, pageSize: number = 20): Observable<NewsApiResponse> {
+    return this.http.get<NewsApiResponse>(
+      `${environment.rawgBaseUrl}/news/`,
+      {
+        ...this.httpOptions,
+        params: {
+          page: page.toString(),
+          pagesize: pageSize.toString(),
+          key: environment.rawgApiKey,
+        },
+      }
+    );
+  }
+
+  /**
+   * Fetch available platforms.
+   * @param page - page number (default: 1)
+   * @param pageSize - results per page (default: 60)
+   */
+  getPlatforms(page: number = 1, pageSize: number = 60): Observable<any> {
+    return this.http.get<any>(
+      `${environment.rawgBaseUrl}/platforms/`,
+      {
+        ...this.httpOptions,
+        params: {
+          page: page.toString(),
+          pagesize: pageSize.toString(),
+          key: environment.rawgApiKey,
+        },
+      }
+    );
+  }
+
+  /**
+   * Get cover image for a specific game.
+   */
+  getGameCoverDirect(id: number): Observable<GameCover[]> {
+    return this.http.get<GameCover[]>(
+      `${environment.rawgBaseUrl}/games/${id}/covers`,
+      {
+        ...this.httpOptions,
+        params: {
+          key: environment.rawgApiKey,
+        },
+      }
+    );
   }
 }

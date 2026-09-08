@@ -1,18 +1,18 @@
 <div class="row m-3">
-  <div class="col-2 col-xs-6 text-center ">
-    <h1 class="">Admin Page</h1>
+  <div class="col-2 col-xs-6 text-center">
+    <h1>Admin Page</h1>
   </div>
   <div class="col-10 col-xs-6 text-end">
     <button class="btn btn-primary" (click)="logout()">Logout</button>
   </div>
 </div>
 <div class="row">
-  <div class="col-xl-6 col-xs-12 ">
+  <div class="col-xl-6 col-xs-12">
     <mat-card>
       <h2 class="text-center">{{editWinner ? 'Pick a winner to delete':'Winners List'}}</h2>
       <ul class="list-group" *ngFor="let winner of winners">
         <li class="list-group-item" (click)="toggle($event)" [ngClass]="{'list-group-item-success':editWinner}"
-          [id]="winner.id">{{winner.data}}</li>
+          [id]="winner.id">{{winner.data()['data']}}</li>
       </ul>
       <hr>
       <mat-card class="m-2">
@@ -38,9 +38,9 @@
 
       <cdk-virtual-scroll-viewport appendOnly [itemSize]="games2.length" class="viewport text-center">
         <div *cdkVirtualFor="let game of games2" class="viewport-item" [ngClass]="{'list-group-item-success':editGame}" (click)="toggleGames($event)" [id]="game.id">
-          <a [href]="game.link" class="">{{game.game}}</a>
+          <a [href]="game.data().link" class="">{{game.data().game}}</a>
           <br>
-          <img [src]=" game.img" alt="" style="width:100px; height:100px">
+          <img [src]="game.data().img" alt="" style="width:100px; height:100px">
           <hr class="my-1">
         </div>
       </cdk-virtual-scroll-viewport>
@@ -61,17 +61,3 @@
     </mat-card>
   </div>
 </div>
-
-
-
-<!-- <button class="btn btn-primary" (click)="massUpdateGames()">MassUpdate Games</button> -->
-<!-- <ul class="list-group" *ngFor="let game of games; let i=index">
-  <li class="list-group-item " [id]="game.id" >
-     {{game.game}}
-     <img [src]="game.img" alt="image" style="width:50px">
-     <br>
-     <a [href]="game.link">Game Link</a>
-  </li>
-</ul> -->
-<!-- <button class="btn btn-primary">Update winners</button> -->
-<!-- <button class="btn btn-primary" (click)="massUpdatewinners()">Mass Update winners</button> -->

@@ -1,65 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Game } from '../services/api-models';
 import { GamesApiService } from '../services/games-api.service';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-game-news',
   templateUrl: './game-news.component.html',
   styleUrls: ['./game-news.component.css']
 })
-export class GameNewsComponent implements OnInit {
-  test: any = [];
+export class GameNewsComponent implements OnInit, OnDestroy {
   games: Game[] = [];
-  gameCovers: any[] = [];
+  isLoading = true;
+  error: string | null = null;
+  private gamesSubscription!: Subscription;
 
-  constructor(private gamesApiService: GamesApiService) {
-  }
+  constructor(private gamesApiService: GamesApiService) {}
+
   ngOnInit(): void {
-    this.getAllGames();
+    this.gamesSubscription = this.gamesApiService.getGames2().subscribe({
+      next: (res: Game[]) => {
+        this.games = res;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load games. Please try again later.';
+        this.isLoading = false;
+        console.error('Error loading games:', err);
+      }
+    });
   }
 
-  getAllGames() {
-    this.gamesApiService.getGames2().subscribe((res: Game[]) => {
-      this.games = res;
-    })
+  ngOnDestroy(): void {
+    this.gamesSubscription?.unsubscribe();
   }
-
-  // getCovers(coverIds:string) {
-  //       this.gamesApiService.getGameCover(coverIds).subscribe((res: any) => {
-  //         // game.cover = res.url;
-  //         // console.log(res);
-  //         // console.log(this.games);
-  //       this.games.forEach((game:any)=>{
-  //         game.first_release_date = new Date(game.first_release_date*1000).toLocaleDateString();
-  //         // console.log((new Date(game.first_release_date*1000).toLocaleDateString()))
-  //         // console.log(moment(new Date()).subtract(1,'months').unix());
-  //         game.summary.length > 250 ? game.summary = game.summary.slice(0,250) + '...' : game.summary;
-  //         res.filter((res:any)=>{if(res.game === game.id){
-  //           res.url = res.url.replace('thumb', '720p');
-  //           game.cover=res.url;
-  //         }})
-  //       });
-  //       this.gamesApiService.onGamesCreated.next(this.games);
-  //       })
-  //     }
-
-  //     getGames() {
-
-  //       this.gamesApiService.testGames().subscribe((res: any) => {
-  //         this.test = res;
-  //         console.log(res);
-  //         // this.test.forEach((game: any) => { this.getGame(game?.game); })
-  //       })
-  //     }
-
-  //     getGame(id: number) {
-  //       this.gamesApiService.getGame(id).subscribe((res: any) => {
-
-  //         this.games.push(res);
-  //         // this.getCovers();
-  //       })
-
-  //     }
-
 }

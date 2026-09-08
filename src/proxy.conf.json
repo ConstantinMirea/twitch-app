@@ -1,8 +1,8 @@
 {
   "/api": {
-    "target": "https://r4lxp4z6fb.execute-api.us-west-2.amazonaws.com/production",
+    "target": "https://api.rawg.io/api",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": { "^/api": "" }
-}
+  }
 }

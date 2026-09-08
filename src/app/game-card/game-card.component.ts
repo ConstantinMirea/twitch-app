@@ -7,7 +7,5 @@ import { Game } from '../services/api-models';
   styleUrls: ['./game-card.component.css']
 })
 export class GameCardComponent {
-  
-@Input() game!:Game
-
+  @Input() game!: Game;
 }

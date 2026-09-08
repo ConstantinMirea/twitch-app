@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../login/auth.service';
 import { UpdateService } from './update.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { gamesPlayed } from '../games-streamed/games-played';
+import { DocumentData, FirestoreDataConverter, QueryDocumentSnapshot } from '@angular/fire/firestore';
+
+interface FirebaseDoc {
+  data(): Record<string, unknown>;
+  id: string;
+}
 
 @Component({
   selector: 'app-admin-page',
@@ -12,50 +16,56 @@ import { gamesPlayed } from '../games-streamed/games-played';
   styleUrls: ['./admin-page.component.css'],
 })
 export class AdminPageComponent implements OnInit {
-  winners: any[] = [];
-  games: any[] = [];
-  // games2 = gamesPlayed;
-  games2: any[] = [];
+  winners: FirebaseDoc[] = [];
+  games: FirebaseDoc[] = [];
+  games2: FirebaseDoc[] = [];
   name: string | undefined;
   editWinner: boolean = false;
   editGame: boolean = false;
-
-  // items = Array.from({length: 100000}).map((_, i) => `Item #${i}`);
 
   constructor(
     private authservice: AuthService,
     private updateService: UpdateService,
     private _snackBar: MatSnackBar
   ) {}
+
   ngOnInit(): void {
     this.loadWinners();
     this.loadGames();
   }
-  logout() {
+
+  logout(): void {
     this.authservice.logout();
   }
 
-  loadWinners() {
+  loadWinners(): void {
     this.updateService.returnWinners().then((docs) => {
-      docs.forEach((ex) => {
-        this.winners.push({ ...ex.data(), id: ex.id });
+      const firebaseDocs: FirebaseDoc[] = [];
+      docs.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
+        firebaseDocs.push({
+          id: doc.id,
+          data: () => doc.data() as Record<string, unknown>,
+        });
       });
-      // console.log(this.winners);
-      return this.winners;
+      this.winners = firebaseDocs;
     });
   }
 
-  loadGames() {
+  loadGames(): void {
     this.updateService.returnGames().then((docs) => {
-      docs.forEach((ex) => {
-        this.games.push({ ...ex.data(), id: ex.id });
+      const firebaseDocs: FirebaseDoc[] = [];
+      docs.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
+        firebaseDocs.push({
+          id: doc.id,
+          data: () => doc.data() as Record<string, unknown>,
+        });
       });
-      // console.log(this.games);
+      this.games = firebaseDocs;
       this.games2 = [...this.games];
     });
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     this.updateService.updateWinners(form.value.name);
     this.winners = [];
     this.loadWinners();
@@ -63,7 +73,7 @@ export class AdminPageComponent implements OnInit {
     form.reset();
   }
 
-  onSubmitGames(form2: NgForm) {
+  onSubmitGames(form2: NgForm): void {
     this.updateService.updateGames(
       form2.value.title,
       form2.value.image,
@@ -74,44 +84,36 @@ export class AdminPageComponent implements OnInit {
     form2.reset();
   }
 
-  editWinners() {
-       this.editWinner = !this.editWinner;
+  editWinners(): void {
+    this.editWinner = !this.editWinner;
   }
 
-  editGames() {
-       this.editGame = !this.editGame;
+  editGames(): void {
+    this.editGame = !this.editGame;
   }
 
-  toggle(event: any) {
+  toggle(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
     if (this.editWinner) {
-      this.updateService.deleteWinner(event.target.id);
-      this._snackBar.open('List element deleted:', event.target.innerText);
+      this.updateService.deleteWinner(target.id);
+      this._snackBar.open('List element deleted:', target.innerText);
       this.winners = this.winners.filter(
-        (winner) => winner.data !== event.target.innerText
+        (winner) => winner.data()['data'] !== target.innerText
       );
       this.editWinner = false;
-
     }
   }
 
-  toggleGames(event: any) {
+  toggleGames(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
     if (this.editGame) {
-      console.log(event.target.id);
-      // this.updateService.deleteGame(event.target.id);
-      this._snackBar.open('Game deleted:', event.target.innerText);
+      this.updateService.deleteGame(target.id);
+      this._snackBar.open('Game deleted:', target.innerText);
       this.games = this.games.filter(
-        (game) => game.id !== event.target.id
+        (game) => game.id !== target.id
       );
       this.games2 = [...this.games];
       this.editGame = false;
     }
-  }
-
-
-  massUpdatewinners() {
-    this.updateService.massUpdate();
-  }
-  massUpdateGames() {
-    this.updateService.massUpdateGames();
   }
 }

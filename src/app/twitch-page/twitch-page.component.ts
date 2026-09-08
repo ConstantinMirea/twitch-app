@@ -1,4 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+
+declare const Twitch: {
+  Embed: new (element: string | HTMLElement, options: TwitchEmbedOptions) => void;
+};
+
+interface TwitchEmbedOptions {
+  width: number;
+  height: number;
+  channel: string;
+}
 
 @Component({
   selector: 'app-twitch-page',
@@ -7,14 +17,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TwitchPageComponent implements OnInit {
   ngOnInit(): void {
-
-    // @ts-ignore
-    // tslint:disable-next-line:no-unused-expression
-    new Twitch.Embed('twitch-embed', {
-      width: 1024,
-      height: 650,
-      channel: 'constantinsgamingchannel'
-    });
+    if (typeof Twitch !== 'undefined') {
+      new Twitch.Embed('twitch-embed', {
+        width: 1024,
+        height: 650,
+        channel: 'constantinsgamingchannel'
+      });
+    }
   }
-
 }

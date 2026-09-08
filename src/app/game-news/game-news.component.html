@@ -1,19 +1,17 @@
-
 <div class="container-fluid d-flex flex-wrap">
+  <div *ngIf="isLoading" class="text-center mt-5">
+    <p>Loading games...</p>
+  </div>
+  <div *ngIf="error" class="text-center mt-5">
+    <div class="alert alert-danger">{{ error }}</div>
+  </div>
+  <ng-container *ngIf="!isLoading && !error">
     <ng-container *ngFor="let game of games">
-    <div class="row ">
-        <div class="col-12 ">
-            <app-game-card [game]="game"></app-game-card>
+      <div class="row">
+        <div class="col-12">
+          <app-game-card [game]="game"></app-game-card>
         </div>
-    </div>
-</ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
 </div>
-
-<!-- <div *ngFor="let game of games"> -->
-  
-    <!-- <a [href]="game.url" target="blank">{{game.name }}</a>
-  <img [src]="game.cover" [alt]="game.name"> -->
-
-  <!-- </div> -->
-
-  

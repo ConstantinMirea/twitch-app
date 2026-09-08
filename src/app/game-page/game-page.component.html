@@ -1,45 +1,38 @@
-<div class="container-fluid ">
-    <mat-card class="example-card">
-        <mat-card-header>
-    
-            <mat-card-title><h1>{{selectedGame.name}}</h1></mat-card-title>
-            <mat-card-subtitle>Genre here</mat-card-subtitle>
-        </mat-card-header>
-        <img class="card-image" [src]="selectedGame.cover" [alt]="selectedGame.name">
-        <mat-card-content>
-            <h2>Summary:</h2><p>{{ selectedGame.summary}}</p>
-            <h2>Storyline: </h2> <p>{{selectedGame.storyline}}</p>
-            <h2>Release date: </h2><p>{{selectedGame.first_release_date}}</p>
-    <h2>Rating</h2><p>{{selectedGame.aggregated_rating}}</p>
-    <h2>Screenshots:</h2>
-    <p-galleria [value]="selectedGame.screenshots" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
-        <ng-template pTemplate="item" let-item>
-            <img [src]="item" style="width: 100%;" />
-        </ng-template>
-        <ng-template pTemplate="thumbnail" let-item>
-            <div class="grid grid-nogutter justify-content-center">
-                <img [src]="item" style="width: 100px;"/>
-            </div>
-        </ng-template>
-    </p-galleria>
-    <!-- <div class="row d-flex justify-content-start flex-wrap">
-        <div >
-            <div class="screenshots">
-                <img class="screenshot" *ngFor="let screenshot of selectedGame.screenshots" [src]="screenshot" [alt]="selectedGame.name">
-            </div>
-        
-        
-        </div>
-    </div> -->
+<div class="container-fluid">
+  <div *ngIf="isLoading" class="text-center mt-5">
+    <p>Loading game details...</p>
+  </div>
+  <div *ngIf="error" class="text-center mt-5">
+    <div class="alert alert-danger">{{ error }}</div>
+  </div>
+  <mat-card class="example-card" *ngIf="!isLoading && !error && selectedGame">
+      <mat-card-header>
 
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
-        </mat-card-actions>
-    </mat-card>
+          <mat-card-title><h1>{{selectedGame.name}}</h1></mat-card-title>
+          <mat-card-subtitle>Genre here</mat-card-subtitle>
+      </mat-card-header>
+      <img class="card-image" [src]="selectedGame.cover" [alt]="selectedGame.name">
+      <mat-card-content>
+          <h2>Summary:</h2><p>{{ selectedGame.summary}}</p>
+          <h2>Storyline: </h2> <p>{{selectedGame.storyline}}</p>
+          <h2>Release date: </h2><p>{{selectedGame.first_release_date}}</p>
+  <h2>Rating</h2><p>{{selectedGame.aggregated_rating}}</p>
+  <h2>Screenshots:</h2>
+  <p-galleria [value]="selectedGame.screenshots" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
+      <ng-template pTemplate="item" let-item>
+          <img [src]="item" style="width: 100%;" />
+      </ng-template>
+      <ng-template pTemplate="thumbnail" let-item>
+          <div class="grid grid-nogutter justify-content-center">
+              <img [src]="item" style="width: 100px;"/>
+          </div>
+      </ng-template>
+  </p-galleria>
+
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+      </mat-card-actions>
+  </mat-card>
 </div>
-
-
-
-<!-- <pre *ngIf="selectedGame">{{selectedGame | json}}</pre> -->

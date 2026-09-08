@@ -7,25 +7,22 @@ import { Component } from '@angular/core';
 })
 export class StreamingScheduleComponent {
   selected: Date | null | undefined;
-  customDate: String | undefined;
+  customDate: string | undefined;
   streamingInterval: string | undefined
-  displayDate() {
+
+  displayDate(): void {
     if (this.selected) {
-      let date = this.selected;
-      let year = date.getFullYear();
-      let month = date.getMonth()+1;
-      let day = date.getDate();
-      let dayOfTheWeek = date.getDay();
-console.log(dayOfTheWeek);
-      this.customDate = day + '-' + month + '-' + year;
+      const date = this.selected;
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const dayOfTheWeek = date.getDay();
 
-      if (dayOfTheWeek > 5 || dayOfTheWeek === 0) {
+      this.customDate = `${day}-${month}-${year}`;
 
-        this.streamingInterval = '12:00 - 20:00';
-      } else {
-        this.streamingInterval = '18:00 - 23:30';
-      }
+      this.streamingInterval = dayOfTheWeek > 5 || dayOfTheWeek === 0
+        ? '12:00 - 20:00'
+        : '18:00 - 23:30';
     }
-
   }
 }

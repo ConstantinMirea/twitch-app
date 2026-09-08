@@ -1,40 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UpdateService } from '../admin-page/update.service';
 
-import {gamesPlayed} from "./games-played";
+interface GamePlayed {
+  id: string;
+  img: string;
+  game: string;
+  link?: string;
+}
 
 @Component({
   selector: 'app-games-streamed',
   templateUrl: './games-streamed.component.html',
   styleUrls: ['./games-streamed.component.css'],
 })
-export class GamesStreamedComponent  {
-  // gameSlides = gameSlides;
-  gameSlides: any[] | undefined;
-  // gameSlides2:any[] | undefined;
-  // gamesPlayed = gamesPlayed;
-  gamesPlayed: any[] = [];
+export class GamesStreamedComponent implements OnInit {
+  gameSlides: { img: string }[] = [];
+  gamesPlayed: GamePlayed[] = [];
 
-  constructor(private updateService: UpdateService) {
-this.loadGames()
-    // this.createGameSlides();
-}
+  constructor(private updateService: UpdateService) {}
 
-  createGameSlides() {
-    this.gameSlides = this.gamesPlayed.map((game: { img: any; }) => {
-      return {img:game.img};
-    });
+  ngOnInit(): void {
+    this.loadGames();
   }
 
-  loadGames() {
+  loadGames(): void {
     this.updateService.returnGames().then((docs) => {
-      docs.forEach((ex) => {
-        this.gamesPlayed.push({ ...ex.data(), id: ex.id });
+      const games: GamePlayed[] = [];
+      docs.forEach((doc) => {
+        games.push({ ...doc.data(), id: doc.id } as GamePlayed);
       });
-      console.log(gamesPlayed);
-      this.gameSlides = this.gamesPlayed.map((game: { img: any; }) => {
-        return {img:game.img};
-      });
+      this.gamesPlayed = games;
+      this.gameSlides = this.gamesPlayed.map((game) => ({ img: game.img }));
     });
   }
 }

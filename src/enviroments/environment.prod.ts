@@ -10,5 +10,5 @@ export const environment = {
   },
   rawgApiKey: "SATQN5B4xm6ccVkyP1z4s8pGDyY9GyyV6XM9jg9W",
   rawgBaseUrl: "https://api.rawg.io/api",
-  production: false
+  production: true
 };
